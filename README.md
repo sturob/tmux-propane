@@ -11,7 +11,15 @@ The essence of this plugin is making it easy to rearrange panes and alter layout
 
 ## How it works
 
-Use the wasd keys (holding alt) to move the current pane in any direction. Panes go full-edge when they hit window edges, this seems a bit weird, but allows for more complex rearrangements.
+Use the wasd keys (holding alt) to move the current pane in any direction. Panes go full-edge when they hit window edges, this is a bit weird at first, but allows for more complex rearrangements.
+
+Panes can be moved between windows by moving off the left or right edge of the screen, and between sessions up or down.
+
+If you move right of the last window in a session, a new window will be created specifically for the pane.
+
+
+
+
 
 ## a few propane accessories:
 
