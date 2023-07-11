@@ -30,6 +30,7 @@ if [ $prev_session ]; then
 		tmux list-panes -F '#{pane_id} #{pane_at_bottom}' | awk "/ 1$/" | head -n 1 | awk '{print $1}'
 	)
 	tmux join-pane -s "$id" -t "$bottom_edge_pane" # shouldnt this be move-pane ?
+	$CURRENT_DIR/full-edge.sh $id down
 elif [ $next_session ]; then
 	if [ ! $full_width]; then
 		$CURRENT_DIR/full-edge.sh $id down
@@ -41,6 +42,7 @@ elif [ $next_session ]; then
 	)
 	# tmux join-pane -s "$id" # -b -t "$top_edge_pane"
 	tmux move-pane -s "$id" -b -t "$top_edge_pane"
+	$CURRENT_DIR/full-edge.sh $id up 
 	# echo "$top_edge_pane and $id" >> $LOG
 else 
 	# Move to the pane above/below and save its id and size

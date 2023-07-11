@@ -40,6 +40,7 @@ if [ $prev_window ]; then
 		# tmux join-pane -s "$id"
 		right_edge_pane=$( tmux list-panes -F '#{pane_id} #{pane_at_right}' | awk "/ 1$/" | head -n 1 | awk '{print $1}')
 		tmux move-pane -b -s "$id" -t "$right_edge_pane"
+		$CURRENT_DIR/full-edge.sh $id right
 	fi
 
 	# todo
@@ -77,6 +78,7 @@ elif [ $next_window ]; then
 		tmux next-window
 		left_edge_pane=$( tmux list-panes -F '#{pane_id} #{pane_at_left}' | awk "/ 1$/" | head -n 1 | awk '{print $1}')
 		tmux move-pane -b -s "$id" -t "$left_edge_pane"
+		$CURRENT_DIR/full-edge.sh $id left
 		# tmux join-pane -s "$id"
 	fi
 else 
