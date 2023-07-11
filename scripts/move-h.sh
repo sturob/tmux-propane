@@ -5,11 +5,14 @@ LOG="/tmp/propane.log"
 
 dir=$1
 
-lockfile=/tmp/mylockfile
-exec 200>$lockfile
-# Wait for lock on fd 200 (associated with $lockfile) for the rest of the script
-flock -n 200 || { flock 200; }
-# lock will be automatically released when the script finishes or the file descriptor is closed
+# no stomping
+if command -v flock >/dev/null 2>&1; then
+	LOCKFILE=/tmp/propane-lockfile
+	exec 200>$LOCKFILE
+	# Wait for lock on fd 200 (associated with $LOCKFILE) for the rest of the script
+	flock -n 200 || { flock 200; }
+	# lock will be automatically released when the script finishes or file descriptor is closed
+fi
 
 declare -A tmux_dir
 tmux_dir[left]="L"
