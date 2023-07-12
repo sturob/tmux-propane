@@ -25,11 +25,11 @@ case $edge in
 		flip_n_kill
         ;;
     "left")
-		tmux split-window -f -h -b -l 30
+		tmux split-window -f -h -b -l 45
 		flip_n_kill
         ;;
     "right")
-		tmux split-window -f -h  -l 30
+		tmux split-window -f -h  -l 45
 		flip_n_kill
         ;;
 esac
