@@ -2,84 +2,62 @@
 
 CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LOG="/tmp/propane.log"
-
-dir=$1
+DIRECTION=$1
 
 # no stomping
 if command -v flock >/dev/null 2>&1; then
 	LOCKFILE=/tmp/propane-lockfile
 	exec 200>$LOCKFILE
-	# Wait for lock on fd 200 (associated with $LOCKFILE) for the rest of the script
-	flock -n 200 || { flock 200; }
-	# lock will be automatically released when the script finishes or file descriptor is closed
+	flock -n 200 || { flock 200; } # Wait for lock on fd 200 (associated with $LOCKFILE) for the rest of the script
+	# lock is automatically released when the script finishes or file descriptor is closed
 fi
 
 declare -A tmux_dir
 tmux_dir[left]="L"
 tmux_dir[right]="R"
 
-read -r id height width is_left is_right is_top is_bottom< <(tmux display-message -p '#{pane_id} #{pane_height} #{pane_width} #{pane_at_left} #{pane_at_right} #{pane_at_top} #{pane_at_bottom}')
+read -r id height width is_left is_right is_top is_bottom< <(tmux display-message -p \
+	'#{pane_id} #{pane_height} #{pane_width} #{pane_at_left} #{pane_at_right} #{pane_at_top} #{pane_at_bottom}')
 
-[[ $dir = 'left' && "$is_left" -eq "1" ]] && prev_window=true
-[[ $dir = 'right' && "$is_right" -eq "1" ]] && next_window=true
-[[ "$is_top" -eq 1 && "$is_bottom" -eq 1 ]] && full_height=true
+[[ "$is_top" -eq 1 && "$is_bottom" -eq 1 ]] && is_full_height=true
 
-if [ $prev_window ]; then
-
-	if [ ! $full_height ]; then
-		$CURRENT_DIR/full-edge.sh $id left
+if [ ! $is_full_height ]; then # isolate an edge case
+	if [[ $is_left -eq 1 && $DIRECTION = 'left' || $is_right -eq 1 && $DIRECTION = 'right' ]]; then
+		$CURRENT_DIR/full-edge.sh $id $DIRECTION
 		exit
 	fi
+fi
 
-	this_window=$(tmux display-message -p '#{window_index}')
-	first_window=$(tmux list-windows | awk -F: '{print $1}' | sort -n | head -n1)
+[[ $DIRECTION = 'left' && "$is_left" -eq "1" ]] && goto_prev_window=true
+[[ $DIRECTION = 'right' && "$is_right" -eq "1" ]] && goto_next_window=true
 
-	# break off a pane into its own window if going left from first window
-	if [ $this_window -eq $first_window ]; then
-		n=$(tmux display-message -p '#{window_panes}')
-		if [ $n = 1 ]; then # if there's no other panes then it's pointless
+this_window_index=$(tmux display-message -p '#{window_index}')
+
+if [ $goto_prev_window ]; then
+	first_window_index=$(tmux list-windows | awk -F: '{print $1}' | sort -n | head -n1)
+	if [ $this_window_index -eq $first_window_index ]; then # moving left from leftest window
+	 	panes_n=$(tmux display-message -p '#{window_panes}')
+		if [ $panes_n = 1 ]; then # there's no other panes so it would be a noop, move it to an existing window 
 			tmux previous-window
 			right_edge_pane=$( tmux list-panes -F '#{pane_id} #{pane_at_right}' | awk "/ 1$/" | head -n 1 | awk '{print $1}')
 			tmux move-pane -b -s "$id" -t $right_edge_pane
-		else
+		else 
 			tmux break-pane
 		fi
-	else
+	else # pane to previous window, full right edge
 		tmux previous-window
-		# tmux join-pane -s "$id"
 		right_edge_pane=$( tmux list-panes -F '#{pane_id} #{pane_at_right}' | awk "/ 1$/" | head -n 1 | awk '{print $1}')
 		tmux move-pane -b -s "$id" -t "$right_edge_pane"
 		$CURRENT_DIR/full-edge.sh $id right
 	fi
-
-	# todo
-	# 	get panes with pane_at_right
-	# 	if is_top 
-	#		get top pane in this window
-	#		try to join-pane before top, if error after
-	#   else if is_bottom
-	#		get bottom pane
-	# 		try to join after, if error before
-	#   if error find tallest pane and join before/after
-
-elif [ $next_window ]; then
-
-	if [ ! $full_height ]; then
-		$CURRENT_DIR/full-edge.sh $id right
-		exit
-	fi
-
-	this_window=$(tmux display-message -p '#{window_index}')
-	last_window=$(tmux list-windows | awk -F: '{print $1}' | sort -n | tail -n1)
-
-	# break off a pane into its own window if going right from last window
-	if [ $this_window -eq $last_window ]; then
-		n=$(tmux display-message -p '#{window_panes}')
-		if [ $n = 1 ]; then # if there's no other panes then it's pointless
+elif [ $goto_next_window ]; then
+	last_window_index=$(tmux list-windows | awk -F: '{print $1}' | sort -n | tail -n1)
+	if [ $this_window_index -eq $last_window_index ]; then # break off a pane into its own window if going right from last window
+		panes_n=$(tmux display-message -p '#{window_panes}')
+		if [ $panes_n = 1 ]; then # if there's no other panes then it's pointless
 			tmux next-window
 			left_edge_pane=$( tmux list-panes -F '#{pane_id} #{pane_at_left}' | awk "/ 1$/" | head -n 1 | awk '{print $1}')
 			tmux move-pane -b -s "$id" -t "$left_edge_pane"
-			# tmux join-pane -s "$id"
 		else
 			tmux break-pane
 		fi
@@ -88,10 +66,9 @@ elif [ $next_window ]; then
 		left_edge_pane=$( tmux list-panes -F '#{pane_id} #{pane_at_left}' | awk "/ 1$/" | head -n 1 | awk '{print $1}')
 		tmux move-pane -b -s "$id" -t "$left_edge_pane"
 		$CURRENT_DIR/full-edge.sh $id left
-		# tmux join-pane -s "$id"
 	fi
-else 
-	tmux select-pane -${tmux_dir[$dir]} # left-of/right-of too buggy
+else # a normal move
+	tmux select-pane -${tmux_dir[$DIRECTION]} # left-of/right-of too buggy
 
 	target=$(tmux display-message -p '#{pane_id} #{pane_height}')
 	target_id=$(echo $target | awk '{print $1}')
