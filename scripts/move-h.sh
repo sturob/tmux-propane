@@ -40,7 +40,8 @@ if [ $goto_prev_window ]; then
 		if [ $panes_n = 1 ]; then # there's no other panes so it would be a noop, move it to an existing window 
 			tmux previous-window
 			right_edge_pane=$( tmux list-panes -F '#{pane_id} #{pane_at_right}' | awk "/ 1$/" | head -n 1 | awk '{print $1}')
-			tmux move-pane -b -s "$id" -t $right_edge_pane
+			tmux move-pane -b -s "$id" -t "$right_edge_pane"
+			$CURRENT_DIR/full-edge.sh $id right
 		else 
 			tmux break-pane
 		fi
@@ -58,6 +59,7 @@ elif [ $goto_next_window ]; then
 			tmux next-window
 			left_edge_pane=$( tmux list-panes -F '#{pane_id} #{pane_at_left}' | awk "/ 1$/" | head -n 1 | awk '{print $1}')
 			tmux move-pane -b -s "$id" -t "$left_edge_pane"
+			$CURRENT_DIR/full-edge.sh $id left
 		else
 			tmux break-pane
 		fi
@@ -68,18 +70,14 @@ elif [ $goto_next_window ]; then
 		$CURRENT_DIR/full-edge.sh $id left
 	fi
 else # a normal move
-	tmux select-pane -${tmux_dir[$DIRECTION]} # left-of/right-of too buggy
+	tmux select-pane -${tmux_dir[$DIRECTION]} # left-of/right-of too buggy, should be doing this ourselves tho
 
 	target=$(tmux display-message -p '#{pane_id} #{pane_height}')
 	target_id=$(echo $target | awk '{print $1}')
 	target_height=$(echo $target | awk '{print $2}')
 
-	if [ $target_height -eq $height ]; then
+	if [ $target_height -eq $height ]; then # swap if same height
 		tmux swap-pane -s $id -t $target_id
-		# if target_id != id
-		# if [ $is_top = '1' ]; then # TODO find top pane
-		# 	# tmux swap-pane -s $id -t $target_id
-		# fi
 	else
 		tmux move-pane -b -s $id -t $target_id
 	fi
