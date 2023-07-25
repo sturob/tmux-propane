@@ -79,7 +79,12 @@ else # a normal move
 	if [ $target_height -eq $height ]; then # swap if same height
 		tmux swap-pane -s $id -t $target_id
 	else
-		tmux move-pane -b -s $id -t $target_id
+		insert='-b'
+		if [ "$is_bottom" -eq 1 ]; then
+			insert=''
+		fi
+		
+		tmux move-pane $insert -s $id -t $target_id
 	fi
 
 	tmux select-pane -t $id 
