@@ -11,7 +11,13 @@ direction=$1
 
 # $before='-b'
 
-tmux move-pane -h -b -t ".{$direction-of}"
+if [[ $1 = 'up' || $1 = down ]]; then
+	orientation='-h'
+else
+	orientation='-v'
+fi
+
+tmux move-pane $orientation -t ".{$direction-of}"
 
 
 # this_pane=$(tmux display-message -p -F '#{pane_id} #{pane_left}')

@@ -13,7 +13,7 @@ tmux bind -n  M-d  run-shell -b "$CURRENT_DIR/move-h.sh right"
 tmux bind -n  M-W  run-shell -b "$CURRENT_DIR/nudge.sh up"
 tmux bind -n  M-A  run-shell -b "$CURRENT_DIR/nudge.sh left"
 tmux bind -n  M-S  run-shell -b "$CURRENT_DIR/nudge.sh down"
-tmux bind -n  M-E  run-shell -b "$CURRENT_DIR/nudge.sh right"
+tmux bind -n  M-D  run-shell -b "$CURRENT_DIR/nudge.sh right"
 
 tmux bind -N " * y-maximize pane"  -n  M-m  run-shell -b "$CURRENT_DIR/maximize.sh" #resize-pane -y 98%
 tmux bind -N " * y-minimize pane"  -n  M-n  run-shell -b "$CURRENT_DIR/trim.sh" #resize-pane -y 98%
