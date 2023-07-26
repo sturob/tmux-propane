@@ -9,6 +9,18 @@ Rearrange panes and alter layouts with ease. Move the current pane anywhere.
 - use as few keys as possible
 - allow panes to be moved between windows and sessions 
 
+## Demos (asciinema/gifs)
+
+Move a pane between columns
+
+Move a pane between windows
+
+Trim vim instinces
+
+Toggle between column panes
+
+
+
 ## How it works
 
 Use alt + a wasd key to move the current pane in any direction. Panes go full-edge when they hit window edges, this is a bit weird at first, but allows for more complex rearrangements.
