@@ -1,6 +1,6 @@
 # tmux-propane 
 
-Rearrange panes and alter layouts with ease. Move the current pane anywhere.
+Rearrange panes and alter window layouts with ease. Move the current pane anywhere.
 
 ## Objectives
 
@@ -20,7 +20,6 @@ Trim vim instinces
 Toggle between column panes
 
 
-
 ## How it works
 
 Use alt + a wasd key to move the current pane in any direction. Panes go full-edge when they hit window edges, this is a bit weird at first, but allows for more complex rearrangements.
@@ -28,6 +27,7 @@ Use alt + a wasd key to move the current pane in any direction. Panes go full-ed
 Panes can be moved between windows by moving off the left or right edge of the screen, and between sessions up or down.
 
 If you move right of the last window in a session, a new window will be created specifically for the pane.
+
 
 ## Rules
 
@@ -45,7 +45,7 @@ This isn't watertight but enables all possible layouts, even if some need a litt
 These are novel ways to resize panes:
 
 trim
-	count the number of duplicate lines in a pane and reduce accordingly. good for trimming empty space in text editors or command prompts.
+	count the number of duplicate lines in a pane and reduce height accordingly. good for trimming empty space in text editors or command prompts.
 	alt-n
 
 maximise
@@ -53,7 +53,7 @@ maximise
 	alt-m
 
 equalize
-	still using select-layout -E atm, but a more sound implimentation is on the way
+	using the buggy select-layout -E currently (a more sound implimentation is on the way)
 	alt-=
 
 stated resizes
@@ -61,9 +61,10 @@ stated resizes
 	alt-x
 	alt-y
 
+
 ## Who is this for?
 
-This plugin is for tmux users who have already got a basic config for navigating windows + resizing panes, but want improved ways to manage panes.
+This plugin is for tmux users who already have a basic config for navigating windows + resizing panes, but want improved ways to control panes.
 
 
 ## Dependencies
@@ -71,6 +72,8 @@ This plugin is for tmux users who have already got a basic config for navigating
 flock - not necessary but useful to queue motions and prevent multiple commands stomping on each other
 
 awk
+
+tmux > 3.2 ideally - many strange layout bugs are present with earlier tmuxes
 
 
 ## Issues
