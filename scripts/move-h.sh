@@ -28,7 +28,7 @@ if [ ! $is_full_height ]; then # isolate an edge case
 	fi
 fi
 
-[[ $DIRECTION = 'left' && "$is_left" -eq "1" ]] && goto_prev_window=true
+[[ $DIRECTION = "left" && "$is_left" -eq "1" ]] && goto_prev_window=true
 [[ $DIRECTION = 'right' && "$is_right" -eq "1" ]] && goto_next_window=true
 
 this_window_index=$(tmux display-message -p '#{window_index}')
@@ -76,17 +76,15 @@ else # a normal move
 	target_id=$(echo $target | awk '{print $1}')
 	target_height=$(echo $target | awk '{print $2}')
 
-	if [ $target_height -eq $height ]; then # swap if same height
+	if [[ $target_height -eq $height ]]; then #&& $is_full_height ]]; then # swap if same height
 		tmux swap-pane -s $id -t $target_id
 	else
 		insert='-b'
 		if [ "$is_bottom" -eq 1 ]; then
 			insert=''
 		fi
-		
 		tmux move-pane $insert -s $id -t $target_id
 	fi
-
 	tmux select-pane -t $id 
 fi
 
