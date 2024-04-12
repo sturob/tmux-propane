@@ -9,7 +9,7 @@ Rearrange panes and alter window layouts with ease. Move the current pane anywhe
 - use as few keys as possible
 - allow panes to be moved between windows and sessions 
 
-## Demos (asciinema/gifs)
+## Demos [todo]
 
 Move a pane between columns
 
