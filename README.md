@@ -1,81 +1,54 @@
 # tmux-propane 
 
-Rearrange panes and alter window layouts with ease. Move the current pane anywhere.
+Effortlessly rearrange panes and modify window layouts in tmux
 
-## Objectives
+## Key Features
+- Seamless pane movement between windows and sessions
+- Intuitive pane movement inside a window with simple, predictable rules
+- Powerful pane resizing accessories
 
-- make any possible layout
-- be reasonably intuitive, with rules simple enough to pick up quickly
-- use as few keys as possible
-- allow panes to be moved between windows and sessions 
+<!-- ## Demos (asciinema/gifs) -->
 
-## Demos [todo]
+<!-- Move a pane between columns -->
 
-Move a pane between columns
+<!-- Move a pane between windows -->
 
-Move a pane between windows
+<!-- Trim vim instinces -->
 
-Trim vim instinces
-
-Toggle between column panes
-
+<!-- Toggle between column panes -->
 
 ## How it works
+Use the wasd keys and alt (alt-w alt-a alt-s alt-d) to move the current pane in any direction. When panes reach window edges, they snap to the full edge, enabling complex rearrangement.
 
-Use alt + a wasd key to move the current pane in any direction. Panes go full-edge when they hit window edges, this is a bit weird at first, but allows for more complex rearrangements.
-
-Panes can be moved between windows by moving off the left or right edge of the screen, and between sessions up or down.
-
-If you move right of the last window in a session, a new window will be created specifically for the pane.
-
+Panes can be moved between windows by moving them off the left or right edge of the screen, and between sessions by moving up or down. Moving a pane to the right of the last window in a session automatically creates a new window for that pane.
 
 ## Rules
+1. Panes swap vertically if they have equal width (alt-a or alt-d) *
+2. Panes swap horizontally if they have equal height (alt-w or alt-s) *
+3. Moving a pane to the edge of a window will make it occupy the entire edge (full height or width)
+4. Moving an edge pane again shifts it to the adjacent window (horizontal movement) or session (vertical movement)
 
-- Vertical panes swap if they are the same width - they are in a column
-- Horizontal panes swap if they are the same height - they are in a row
-- Otherwise, the pane will be moved between columns or rows
-- Moving a pane into a window edge will make it edged (occupy the whole edge).
-- Moving an edged pane into a window's edge will move it to the adjacent window (horizontally movement) or adjacent session (vertical movement).
+\* If not equal, the pane will move to join the next column or row
 
-This isn't watertight but enables all possible layouts, even if some need a little indirection to achieve.
+These rules, combined with resizing and spliting, should enable the creation of all possible layouts
 
 
 ## A few propane accessories:
+tmux-propane offers novel ways to resize panes:
 
-These are novel ways to resize panes:
-
-trim
-	count the number of duplicate lines in a pane and reduce height accordingly. good for trimming empty space in text editors or command prompts.
-	alt-n
-
-maximise
-	fill the whole space leaving only a single line for each of the other panes
-	alt-m
-
-equalize
-	using the buggy select-layout -E currently (a more sound implimentation is on the way)
-	alt-=
-
-stated resizes
-	enter absolute (=N) or relative (N or -N) integer to the alter height (y) or width (x) 
-	alt-x
-	alt-y
-
+- Trim: Reduces pane height by counting and removing duplicate lines, perfect for eliminating empty space in text editors or command prompts (alt-n)
+- Maximise: Fills the entire space, leaving only a single line for each of the other panes (alt-m)
+- Equalize: Uses the select-layout -E command to distribute panes evenly (a more robust implementation is in development) (alt-=)
+- Stated Resizes: Alter pane height (alt-y) or width (alt-x) using absolute (=N) or relative (N or -N) integer values
 
 ## Who is this for?
-
-This plugin is for tmux users who already have a basic config for navigating windows + resizing panes, but want improved ways to control panes.
-
+tmux-propane is designed for tmux users who already have a basic configuration for navigating windows and resizing panes but desire enhanced pane control capabilities.
 
 ## Dependencies
-
-flock - not necessary but useful to queue motions and prevent multiple commands stomping on each other
-
-awk
-
-tmux > 3.2 ideally - many strange layout bugs are present with earlier tmuxes
-
+- flock (optional but recommended for queueing motions and preventing rapid commands stomping on each other)
+- awk
 
 ## Issues
 
-tmux < 3.2 will go crazy if you set any of the 5 predefined layouts using select-layout or next-layout. So don't do that if you want this plugin to work.
+### tmux < 3.2
+Using any of the five predefined layouts with select-layout or next-layout in tmux versions earlier than 3.2 may cause instability. Avoid using these commands if you want tmux-propane to function properly.
