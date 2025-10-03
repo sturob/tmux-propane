@@ -28,7 +28,7 @@ Panes are moved between windows by moving them off the left or right edge of the
 \* If not equal, the pane will move to join the next column or row
 
 ## A few propane accessories:
-tmux-propane offers novel ways to resize panes:
+tmux-propane offers additional ways to resize panes:
 
 - **Trim**: Reduces pane height by counting and removing duplicate lines, perfect for eliminating empty space in text editors or command prompts (<kbd>ALT + n</kbd>)
 - **Maximise**: Fills the entire space, leaving only a single line for each of the other panes (<kbd>ALT + m</kbd>)
