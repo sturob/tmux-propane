@@ -17,7 +17,7 @@ There are also 4 functions to change pane size based on your current context: **
 ## How it works
 ALT + wasd key (<kbd>ALT + w</kbd> <kbd>ALT + a</kbd> <kbd>ALT + s</kbd> <kbd>ALT + d</kbd>) moves the current pane in any direction. When panes reach window edges, they snap to occupy the full edge length. This enables most arrangements you'll need.
 
-Panes are moved between windows by moving them off the left or right edge of the screen, and between sessions by moving up or down. Moving a pane to the right of the last window in a session automatically creates a new window for that pane.
+A pane moves between windows when moving through the left or right edge of the screen, and between sessions by moving up or down. Moving a pane to the right of the last window in a session automatically creates a new window for that pane.
 
 ## Rules
 * Panes swap vertically if they have equal width (<kbd>ALT + w</kbd> or <kbd>ALT + s</kbd>) \*
