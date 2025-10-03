@@ -43,6 +43,29 @@ tmux-propane is designed for tmux users who already have a basic configuration f
 - awk
 - on macOS you'll need to get your <kbd>ALT</kbd> key passed through into your terminal
 
+## Installation
+
+### Installation with [Tmux Plugin Manager](https://github.com/tmux-plugins/tpm) (recommended)
+
+Add plugin to the list of TPM plugins in `.tmux.conf`:
+
+    set -g @plugin 'sturob/tmux-propane'
+
+Hit `prefix + I` to fetch the plugin and source it. You should now be able to
+use the plugin.
+
+### Manual Installation
+
+Clone the repo:
+
+    $ git clone https://github.com/sturob/tmux-propane ~/clone/path
+
+Add this line to the bottom of `.tmux.conf`:
+
+    run-shell ~/clone/path/propane.tmux
+
+Reload TMUX environment with: `$ tmux source-file ~/.tmux.conf`.
+You should now be able to use the plugin.
 ## Issues
 
 ### tmux < 3.2
