@@ -36,10 +36,10 @@ These rules, combined with resizing and spliting, should enable the creation of 
 ## A few propane accessories:
 tmux-propane offers novel ways to resize panes:
 
-- Trim: Reduces pane height by counting and removing duplicate lines, perfect for eliminating empty space in text editors or command prompts (alt-n)
-- Maximise: Fills the entire space, leaving only a single line for each of the other panes (alt-m)
-- Equalize: Uses the select-layout -E command to distribute panes evenly (a more robust implementation is in development) (alt-=)
-- Stated Resizes: Alter pane height (alt-y) or width (alt-x) using absolute (=N) or relative (N or -N) integer values
+- *Trim*: Reduces pane height by counting and removing duplicate lines, perfect for eliminating empty space in text editors or command prompts (*alt-n*)
+- *Maximise*: Fills the entire space, leaving only a single line for each of the other panes (*alt-m*)
+- *Equalize*: Uses the select-layout -E command to distribute panes evenly (a more robust implementation is planned) (*alt-=*)
+- *Size to*: Alter pane height (*alt-y*) or width (*alt-x*) using absolute (=N) or relative (N or -N) integer values
 
 ## Who is this for?
 tmux-propane is designed for tmux users who already have a basic configuration for navigating windows and resizing panes but desire enhanced pane control capabilities.
