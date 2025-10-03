@@ -15,7 +15,7 @@ There are also 4 functions to change pane size based on your current context: **
 <!-- Toggle between column panes -->
 
 ## How it works
-ALT + wasd key (<kbd>ALT w</kbd> <kbd>ALT a</kbd> <kbd>ALT s</kbd> <kbd>ALT d</kbd>) move the current pane in any direction. When panes reach window edges, they snap to the full edge, this enables most complex arrangements.
+ALT + wasd key (<kbd>ALT+w</kbd> <kbd>ALT+a</kbd> <kbd>ALT+s</kbd> <kbd>ALT+d</kbd>) move the current pane in any direction. When panes reach window edges, they snap to the full edge, this enables most complex arrangements.
 
 Panes are moved between windows by moving them off the left or right edge of the screen, and between sessions by moving up or down. Moving a pane to the right of the last window in a session automatically creates a new window for that pane.
 
