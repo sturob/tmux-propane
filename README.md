@@ -20,10 +20,10 @@ ALT + wasd key (<kbd>ALT + w</kbd> <kbd>ALT + a</kbd> <kbd>ALT + s</kbd> <kbd>AL
 Panes are moved between windows by moving them off the left or right edge of the screen, and between sessions by moving up or down. Moving a pane to the right of the last window in a session automatically creates a new window for that pane.
 
 ## Rules
-1. Panes swap vertically if they have equal width (<kbd>ALT + w</kbd> or <kbd>ALT + s</kbd>) \*
-2. Panes swap horizontally if they have equal height (<kbd>ALT + a</kbd> or <kbd>ALT + d</kbd>) \*
-3. Moving a pane to the edge of a window will make it occupy the entire edge (full height or width)
-4. Moving an edge pane again shifts it to the adjacent window (horizontal movement) or session (vertical movement)
+* Panes swap vertically if they have equal width (<kbd>ALT + w</kbd> or <kbd>ALT + s</kbd>) \*
+* Panes swap horizontally if they have equal height (<kbd>ALT + a</kbd> or <kbd>ALT + d</kbd>) \*
+* Moving a pane to the edge of a window will make it occupy the entire edge (full height or width)
+* Moving an edge pane again shifts it to the adjacent window (horizontal movement) or session (vertical movement)
 
 \* If not equal, the pane will move to join the next column or row
 
